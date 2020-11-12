@@ -2,6 +2,7 @@ api/atividades.txt
 api/model.txt
 api/run.sh
 api/venv/
+api/cfg/.env
 api/cfg/__pycache__
 api/src/__pycache__
 front/node_modules
