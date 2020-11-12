@@ -1,0 +1,6 @@
+api/atividades.txt
+api/model.txt
+api/run.sh
+api/venv/
+api/cfg/__pycache__
+api/src/__pycache__
