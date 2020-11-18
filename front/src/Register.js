@@ -1,4 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import { Container, Form, Col, Row, Card, Button, Alert } from 'react-bootstrap'
+
 import API from './api'
 import './App.css'
 
@@ -29,7 +31,7 @@ function Register (props) {
         setMsg(res.data.err)
       }
     }).catch(err => {
-      setMsg(err.response.statusText)
+      setMsg(err.response ? err.response.statusText : 'Internal error!')
     })
   }
 
@@ -46,30 +48,51 @@ function Register (props) {
   }
 
   return (
-    <div className="form-box">
-      <div className="form-input">
-        <label htmlFor="email"><b>Email</b></label>
-        <input type="text" placeholder="Email" name="email" value={email} onChange={handleChange} required/>
-      </div>
-      <div className="form-input">
-        <label htmlFor="password"><b>Password</b></label>
-        <input type="password" placeholder="Password" name="password" value={password} onChange={handleChange} required/>
-      </div>
-      <div className="form-input">
-        <label htmlFor="re_password"><b>Re Password</b></label>
-        <input type="password" placeholder="Re Password" name="re_password" value={re_password} onChange={handleChange} required/>
-      </div>
-      <div className="form-input">
-        <label htmlFor="cpf"><b>CPF</b></label>
-        <input type="text" placeholder="CPF" name="cpf" value={cpf} onChange={handleChange} required/>
-      </div>
-      <div className="form-input">
-        <button type="submit" onClick={doRegister} disabled={!enableButton()}>Register</button>
-      </div>
-      {msg && (
-        <p>{msg}</p>
-      )}
-    </div>
+    <Container>
+      <Row className="justify-content-md-center mt-4">
+        <Card style={{ width: '18rem' }}>
+          <Card.Body>
+            <Card.Title>Sign Up</Card.Title>
+            <Form>
+              <Form.Group as={Row}>
+                <Col sm={12}>
+                  <Form.Control type="email" placeholder="Email" name="email" onChange={handleChange} />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Col sm={12}>
+                  <Form.Control type="password" placeholder="Password" name="password" onChange={handleChange} />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Col sm={12}>
+                  <Form.Control type="password" placeholder="Repeat Password" name="re_password" onChange={handleChange} />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Col sm={12}>
+                  <Form.Control type="text" placeholder="CPF" name="cpf" onChange={handleChange} />
+                </Col>
+              </Form.Group>
+            </Form>
+            { msg &&
+              <Row>
+                <Col>
+                  <Alert variant="dark">
+                    { msg }
+                  </Alert>
+                </Col>
+                </Row>
+            }
+            <Row>
+              <Col>
+                <Button variant="dark" onClick={doRegister} disabled={!enableButton()}>Register</Button>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+      </Row>
+    </Container>
   )
 }
 
