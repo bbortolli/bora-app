@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Redirect } from 'react-router-dom'
-import { Form, Col, Row, Card, Button } from 'react-bootstrap'
+import { Container, Form, Col, Row, Card, Button } from 'react-bootstrap'
 import API from './api'
 import './App.css'
 import { useAuth } from './auth'
@@ -54,32 +54,32 @@ function Login () {
   }
 
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Body>
-        <Card.Title>LOGIN</Card.Title>
-        <Form>
-          <Form.Group as={Row} controlId="formHorizontalEmail">
-            <Col sm={12}>
-              <Form.Control type="email" placeholder="Email" name="email" onChange={handleChange} />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} controlId="formHorizontalPassword">
-            <Col sm={12}>
-              <Form.Control type="password" placeholder="Password" name="password" onChange={handleChange} />
-            </Col>
-          </Form.Group>
-        </Form>
-        <Row>
-          <Col sm={6}>
-            <Button variant="dark" onClick={doLogin} disabled={!enableButton()}>Login</Button>
-          </Col>
-          <Col sm={6}>
-            <Button variant="dark" onClick={goToRegister} disabled={isLoading}>Sign Up</Button>
-          </Col>
-        </Row>
-      </Card.Body>
-    </Card>
+    <Container>
+      <Row className="justify-content-md-center mt-4">
+        <Card style={{ width: '18rem' }}>
+          <Card.Body>
+            <Card.Title>Login</Card.Title>
+            <Form>
+              <Form.Group as={Row}>
+                <Col sm={12}>
+                  <Form.Control type="email" placeholder="Email" name="email" onChange={handleChange} />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Col sm={12}>
+                  <Form.Control type="password" placeholder="Password" name="password" onChange={handleChange} />
+                </Col>
+              </Form.Group>
+            </Form>
+            <Row>
+              <Col sm={6}>
+                <Button variant="dark" onClick={doLogin} disabled={!enableButton()}>Login</Button>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+      </Row>
+    </Container>
   )
 }
 
