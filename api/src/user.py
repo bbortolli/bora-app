@@ -15,15 +15,15 @@ def insert():
   valid_user = validate_user(request.json)
   error = valid_user.get('error')
   if error:
-    return res_error(400, error)
+    return res_error(200, error)
 
   data = valid_user.get('data')
   exists_email = db.find_one('user', 'email', data.get('email'))
   if exists_email:
-      return res_error(400, 'Email already in use.')
+      return res_error(200, 'Email already in use.')
   exists_cpf = db.find_one('user', 'cpf', data.get('cpf'))
   if exists_cpf:
-      return res_error(400, 'CPF already in use.')
+      return res_error(200, 'CPF already in use.')
   new_user = db.insert('user', data)
 
   return res_success(200, {'id': str(data.get('_id'))}) if new_user else res_error(500, 'Error in registration.')
