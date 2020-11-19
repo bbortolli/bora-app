@@ -72,7 +72,7 @@ function Login () {
                 </Col>
               </Form.Group>
             </Form>
-            <Row float="center">
+            <Row>
               { err &&
                 <Col>
                   <Alert variant="dark"> { err } </Alert>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Form, Col, Row, Card, Button, Alert } from 'react-bootstrap'
+import { Container, Form, Col, Row, Card, Button, Alert, Spinner } from 'react-bootstrap'
 
 import API from './api'
 import './App.css'
@@ -11,6 +11,7 @@ function Register (props) {
   const [re_password, setRePassword] = useState('')
   const [cpf, setCpf] = useState('')
   const [msg, setMsg] = useState(null)
+  const [isLoading, setLoading] = useState(false)
 
   const form = {
     email: setEmail,
@@ -22,16 +23,19 @@ function Register (props) {
   const doRegister = (event) => {
     event.preventDefault()
     setMsg(null)
+    setLoading(true)
     API.post('user', {
       email, password, re_password, cpf
     }).then(res => {
+      setLoading(false)
       if (res.data.success) {
         setMsg('Registered !')
       } else {
         setMsg(res.data.err)
       }
     }).catch(err => {
-      setMsg(err.response ? err.response.statusText : 'Internal error!')
+      setLoading(false)
+      setMsg(err.response ? err.response.statusText : 'Unknown error !')
     })
   }
 
@@ -52,7 +56,7 @@ function Register (props) {
       <Row className="justify-content-md-center mt-4">
         <Card style={{ width: '18rem' }}>
           <Card.Body>
-            <Card.Title>Sign Up</Card.Title>
+            <Card.Title style={{textAlign: 'center'}}>Sign Up</Card.Title>
             <Form>
               <Form.Group as={Row}>
                 <Col sm={12}>
@@ -75,18 +79,21 @@ function Register (props) {
                 </Col>
               </Form.Group>
             </Form>
-            { msg &&
-              <Row>
+            <Row>
+              { msg &&
                 <Col>
-                  <Alert variant="dark">
-                    { msg }
-                  </Alert>
+                  <Alert variant="dark"> { msg } </Alert>
                 </Col>
-                </Row>
-            }
+              }
+              { isLoading &&
+                <Col className="d-flex justify-content-center mb-3">
+                  <Spinner animation="border" variant="success" size="md"/>
+                </Col>
+              }
+            </Row>
             <Row>
               <Col>
-                <Button variant="dark" onClick={doRegister} disabled={!enableButton()}>Register</Button>
+                <Button variant="dark" style={{width: '100%'}} onClick={doRegister} disabled={!enableButton()}>Register</Button>
               </Col>
             </Row>
           </Card.Body>
