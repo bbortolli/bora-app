@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Redirect } from 'react-router-dom'
-import { Container, Form, Col, Row, Card, Button } from 'react-bootstrap'
+import { Container, Form, Col, Row, Card, Button, Spinner, Alert } from 'react-bootstrap'
 import API from './api'
 import './App.css'
 import { useAuth } from './auth'
@@ -28,12 +28,13 @@ function Login () {
     API.post('login', {
       email, password
     }).then(res => {
+      setLoading(false)
       setAuthTokens(res.data.jwt)
       setLoggedIn(true)
     }).catch(err => {
-      setErr(err.response.statusText)
+      setLoading(false)
+      setErr(err.response ? err.response.statusText : 'Unknown error !')
     })
-    setLoading(false)
   }
 
   if (isLoggedIn) {
@@ -58,7 +59,7 @@ function Login () {
       <Row className="justify-content-md-center mt-4">
         <Card style={{ width: '18rem' }}>
           <Card.Body>
-            <Card.Title>Login</Card.Title>
+            <Card.Title style={{textAlign: 'center'}}>Login</Card.Title>
             <Form>
               <Form.Group as={Row}>
                 <Col sm={12}>
@@ -71,9 +72,21 @@ function Login () {
                 </Col>
               </Form.Group>
             </Form>
+            <Row float="center">
+              { err &&
+                <Col>
+                  <Alert variant="dark"> { err } </Alert>
+                </Col>
+              }
+              { isLoading &&
+                <Col className="d-flex justify-content-center mb-3">
+                  <Spinner animation="border" variant="success" size="md"/>
+                </Col>
+              }
+            </Row>
             <Row>
-              <Col sm={6}>
-                <Button variant="dark" onClick={doLogin} disabled={!enableButton()}>Login</Button>
+              <Col>
+                <Button variant="dark" style={{width: '100%'}} onClick={doLogin} disabled={!enableButton() || isLoading}>Login</Button>
               </Col>
             </Row>
           </Card.Body>
