@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navbar, Nav, InputGroup } from 'react-bootstrap'
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from './auth'
 
 function Navigation () {
@@ -8,6 +8,7 @@ function Navigation () {
   const { authTokens, setAuthTokens } = useAuth();
 
   const doLogout = () => {
+    localStorage.removeItem('tokens')
     setAuthTokens(null)
   }
 
