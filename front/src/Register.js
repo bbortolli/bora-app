@@ -24,7 +24,7 @@ function Register (props) {
     event.preventDefault()
     setMsg(null)
     setLoading(true)
-    API.post('user', {
+    API.post('users', {
       email, password, re_password, cpf
     }).then(res => {
       setLoading(false)
