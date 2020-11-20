@@ -13,3 +13,8 @@ def res_error(status, error = None):
     'err': error
   }
   return Response(response=json.dumps(response, default=str), status=status, mimetype='application/json')
+
+def dissoc(dict, *keys):
+  for key in keys:
+    dict.pop(key, None)
+  return dict
