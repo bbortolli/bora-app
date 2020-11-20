@@ -1,5 +1,5 @@
 from flask import request
-from src.utils import res_success, res_error
+from src.utils import res_success, res_error, dissoc
 from src.auth import login_required, request_user_id
 import cfg.db as db
 import re
@@ -63,6 +63,13 @@ def manage_user(f, user_id, array, value):
 ##############################################
 ###           External endpoints           ###
 ##############################################
+
+@login_required
+def user_groups():
+  id_request = request_user_id(request)
+  print(id_request)
+  all_groups = db.find_many('group', 'owner_id', [id_request]) if id_request else []
+  return res_success(200, {'groups': list(map(lambda group: dissoc(group, 'owner_id'), all_groups))})
 
 @login_required
 def get(id):
