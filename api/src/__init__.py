@@ -1,10 +1,11 @@
 from flask import Flask
-import pymongo
-from cfg.settings import DB_NAME, MONGO_URI
+from flask_cors import CORS, cross_origin
+from mongoengine import connect
+from cfg.settings import MONGO_URI
 
-client = pymongo.MongoClient(MONGO_URI)
-db_session = client[DB_NAME]
+connect('bora-app-db', host=MONGO_URI)
 
 app = Flask(__name__)
+CORS(app)
 
 import src.routes
