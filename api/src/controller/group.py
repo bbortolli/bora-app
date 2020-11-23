@@ -1,8 +1,8 @@
 from flask import request
 from src.utils import res_success, res_error, dissoc
 from src.auth import login_required, request_user_id
-import cfg.db as db
 import re
+from src.model.Group import Group
 
 ##############################################
 ###       Utilities for internal use       ###
@@ -63,6 +63,26 @@ def manage_user(f, user_id, array, value):
 ##############################################
 ###           External endpoints           ###
 ##############################################
+
+def test():
+  grupo = Group(
+    name = 'Meu grupo de teste',
+    origin = 'Origem',
+    destiny = 'Destino',
+    owner = '123456123456123456123456',
+    managers = [],
+    members = [],
+    requests = [],
+    invites = []
+  )
+  try:
+    grupo.validate()
+    grupo.save()
+    return res_success(200)
+  except Exception as e:
+    print(e)
+    print(Group.objects.first())
+    return res_error(403)
 
 @login_required
 def user_groups():

@@ -5,7 +5,6 @@ from jwt import encode, decode, ExpiredSignatureError
 from werkzeug import security
 from src.utils import res_success, res_error
 from cfg.settings import SALT, SECRET
-import cfg.db as db
 
 def login():
   data = request.json
