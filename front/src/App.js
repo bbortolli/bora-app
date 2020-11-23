@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 
-// import GroupList from './GroupList'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Navigation from './Navigation'
-import Login from './Login'
-import Register from './Register'
-import Profile from './Profile'
-import Groups from './Groups'
-import Settings from './Settings'
-import PrivateRoute from './PrivateRoute'
+import Navigation from './components/Navigation'
+import Login from './components/Login'
+import Register from './components/Register'
+import Profile from './components/Profile'
+import Groups from './components/Groups'
+import Events from './components/Events'
+import Settings from './components/Settings'
+import PrivateRoute from './components/PrivateRoute'
 import { AuthContext } from './auth'
 
 import {
@@ -43,6 +43,7 @@ function App() {
           <Route path="/signup" component={Register} />
           <PrivateRoute path="/home" component={Profile} />
           <PrivateRoute path="/groups" component={Groups} />
+          <PrivateRoute path="/events" component={Events} />
           <PrivateRoute path="/settings" component={Settings} />
         </Switch>
       </Router>

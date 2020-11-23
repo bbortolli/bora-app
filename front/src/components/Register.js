@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { Container, Form, Col, Row, Card, Button, Alert, Spinner } from 'react-bootstrap'
 
-import API from './api'
-import './App.css'
+import API from '../api'
 
-function Register (props) {
+function Register () {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

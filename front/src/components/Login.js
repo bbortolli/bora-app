@@ -1,14 +1,13 @@
 import React, {useState} from 'react'
 import { Redirect } from 'react-router-dom'
 import { Container, Form, Col, Row, Card, Button, Spinner, Alert } from 'react-bootstrap'
-import API from './api'
-import './App.css'
-import { useAuth } from './auth'
+import API from '../api'
+import { useAuth } from '../auth'
 
 function Login () {
 
   const [isLoggedIn, setLoggedIn] = useState(false)
-  const { setAuthTokens } = useAuth();
+  const { authTokens, setAuthTokens } = useAuth();
   const [isLoading, setLoading] = useState(false)
 
 
@@ -37,12 +36,8 @@ function Login () {
     })
   }
 
-  if (isLoggedIn) {
+  if (authTokens || isLoggedIn) {
     return <Redirect to="/home" />
-  }
-
-  const goToRegister = () => {
-    return <Redirect to="/signup" />
   }
 
   const handleChange = (event) => {

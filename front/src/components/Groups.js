@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Row, Col, Card, Button, Spinner } from 'react-bootstrap'
-import API from './api'
-import { useAuth } from './auth'
+import API from '../api'
+import { useAuth } from '../auth'
 
 function Groups () {
 
   const { authTokens } = useAuth();
   const [groups, setGroups] = useState(null)
+  const [isLoading, setLoading] = useState(true)
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ function Groups () {
       }
     }).then(res => {
       setGroups(res.data.groups)
+      setLoading(false)
     }).catch(err => {
       console.log('err')
     })
@@ -35,7 +37,7 @@ function Groups () {
             <Card.Title>{group.name}</Card.Title>
             <Card.Text style={{ marginBottom: '1px'}}>From: {group.from_location}</Card.Text>
             <Card.Text style={{ marginBottom: '1px'}}>To: {group.to_location}</Card.Text>
-            <Button onClick={() => console.log(group._id)}style={{ marginTop: '5px'}} variant="primary">Open</Button>
+            <Button onClick={() => console.log(group._id)} style={{ marginTop: '5px'}} variant="primary">Open</Button>
           </Card.Body>
         </Card>
       </Col>
@@ -51,7 +53,7 @@ function Groups () {
     return (
       <h1 className="mx-4 my-4">0 Groups!</h1>
     )
-  } else {
+  } else if (isLoading) {
     return <Spinner style={{width: '100px', height: '100px'}} animation="border" className="abs-center"/>
   }
 }
